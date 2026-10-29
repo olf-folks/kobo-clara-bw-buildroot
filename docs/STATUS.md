@@ -13,7 +13,7 @@ kernel have been written to normal system/kernel partitions and booted.
 | Fieldnotes | Manual sync works in trial; owner accepts installed system; no scheduled sync |
 | Frontlight warmth | Slider direction corrected and physically tested |
 | Wi-Fi / SSH / HTTPS | WPA association, DHCP, strict pinned SSH and HTTPS passed installed; successful automatic reconnect after saved selection fix below |
-| Bluetooth | Pair, audible A2DP audio to laptop, playback controls, reconnect and Forget passed RAM trials; bridge/server start on installed boot |
+| Bluetooth | Installed fresh pairing/connection and audible A2DP to laptop speakers pass; volume/Pause commands logged. Installed disconnect/reconnect and bond persistence across a normal reboot also pass, with owner-confirmed audible music. RAM controls/reconnect/Forget passed earlier |
 | Sleep | RAM trial: real suspend, Power wake, touch/radio/light restore; longest recorded suspend 5865.133 seconds |
 | Shutdown | Patched-kernel RAM trial: LED and light off, then independent recovery entry without force reset |
 | Installed sleep | Kernel reports 6.053-second actual suspend; owner confirms Power wake/touch; Wi-Fi, menu and frontlight restored |
@@ -52,7 +52,7 @@ not a measured zero-drain claim or a battery-life benchmark.
 ## Next work
 
 1. Physically exercise saved-network selection in the updated menu.
-2. Complete installed Bluetooth/audio regression; saved-light restart now passes.
+2. Preserve current network, SSH identity and pairing state in future update tooling; installed Bluetooth/audio regression now passes.
 3. Publish the remaining implementation source with dependencies and licenses.
 4. Finish browser/downloads, playlists and recovery package Install/Update/Restore UI.
 
@@ -68,5 +68,24 @@ left unchanged. The new menu and helper are deployed with previous binaries
 retained. Native save capture and restore parser tests passed. The owner then selected
 brightness 10% and warmth 40%; a new normal restart restored those exact hardware
 values automatically, with Wi-Fi and persistent SSH identity also passing.
-Visual confirmation remains pending. Recovery still defaults to light off;
+The owner continued to operate the interface and confirmed Bluetooth audio across the subsequent restart. Recovery still defaults to light off;
 we enabled it at runtime for the re-entry check.
+
+## Integrated build refresh
+
+A fresh v12 rootfs has been built to include the Wi-Fi-selection and saved-light
+fixes. It has not been flashed or independently booted as a whole image; the
+running system is the installed v9 base with tested menu/home/helper updates.
+Offline archive checks and all five e2fsck stages pass. A content/type/mode/
+ownership/link comparison against frozen v9 changes exactly three paths: the
+menu, home wrapper and new restore-light helper. This comparison is not a
+whole-image boot test. This private
+candidate retains the original provisioning overlay, not newly captured owner
+state. Future update tooling must preserve current network settings, SSH host
+identity and pairing data. No private firmware image is published here.
+
+Installed Bluetooth regression is complete: the owner heard music after the
+initial pairing, after disconnect/reconnect, and after a normal reboot without
+another pairing exchange. The radio starts off after reboot; turning it on
+loads the saved bond. Temporary laptop pairing agent is closed and the laptop
+is no longer discoverable.
