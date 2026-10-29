@@ -28,10 +28,12 @@ A black e-ink screen alone does not prove poweroff, nor does a blank/unchanged
 panel prove a failed kernel boot. Use USB, process/kernel evidence, LEDs and
 subsequent boot/recovery behavior together.
 
-## Current open issue
+## Restart / saved-network selection
 
-After normal restart, Wi-Fi settings and host identity persisted but automatic
-association did not. A service restart restored scanning; enabling the existing
-saved home-network entry restored association. We have not yet concluded how
-much is initial firmware/radio startup versus saved selection state. See
-[Status](STATUS.md) rather than treating this as a solved regression.
+The first restart preserved the config file, but the home profile remained
+disabled in it: selecting an existing saved profile had changed runtime state
+without saving the selection. Enabling and saving that profile restored
+automatic WPA/DHCP and pinned SSH after another normal reboot, without a Wi-Fi
+service restart. The menu source now saves existing-network selection and
+reports persistence failure. The rebuilt menu is deployed; existing connectivity
+regression tests passed. Physical selection persistence testing remains.

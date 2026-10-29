@@ -12,7 +12,7 @@ kernel have been written to normal system/kernel partitions and booted.
 | Reader / onboard books | Owner tested reader in RAM and reports installed system working; userdata retained |
 | Fieldnotes | Manual sync works in trial; owner accepts installed system; no scheduled sync |
 | Frontlight warmth | Slider direction corrected and physically tested |
-| Wi-Fi / SSH / HTTPS | WPA association, DHCP, strict pinned SSH and HTTPS passed installed; automatic reconnect issue below |
+| Wi-Fi / SSH / HTTPS | WPA association, DHCP, strict pinned SSH and HTTPS passed installed; successful automatic reconnect after saved selection fix below |
 | Bluetooth | Pair, audible A2DP audio to laptop, playback controls, reconnect and Forget passed RAM trials; bridge/server start on installed boot |
 | Sleep | RAM trial: real suspend, Power wake, touch/radio/light restore; longest recorded suspend 5865.133 seconds |
 | Shutdown | Patched-kernel RAM trial: LED and light off, then independent recovery entry without force reset |
@@ -22,16 +22,24 @@ kernel have been written to normal system/kernel partitions and booted.
 | Browser/downloads | Standalone frontend/runtime not finished; menu entry alone does not establish a working browser |
 | Playlists | Folder queue works; actual playlist management remains unfinished |
 
-## Restart finding still open
+## Restart finding and fix
 
-The saved Wi-Fi configuration and SSH identity survived normal restart, and
-menu, Bluetooth bridge and server started automatically. The Wi-Fi scan list
-was initially empty. Restarting the Wi-Fi service restored scanning; the
-present home network was marked disabled in the saved configuration. Enabling
-that already-saved network restored WPA association and the same DHCP address.
-Thus this test **does not prove unattended Wi-Fi reconnection**. We still need
-to separate initial radio startup from network-selection persistence and repeat
-the restart test after fixing the actual cause.
+The first restart preserved the configuration and SSH identity, but the active
+home network had been marked disabled in the saved configuration. Inspection
+found that the menu's existing-saved-network selection path did not issue
+SAVE_CONFIG, although adding a new network did save after connecting.
+
+After enabling and saving the already-known network, a second normal restart
+automatically completed WPA association and DHCP and accepted strictly pinned
+Wi-Fi SSH, without a Wi-Fi service restart. The configuration and host-key
+hashes matched their new baseline. This rules out claiming a required radio
+startup workaround based only on the first empty scan list.
+
+The menu source now saves existing-network selection and reports a save failure
+separately. The rebuilt menu passed the existing connectivity regression checks and was
+deployed with the prior binary retained for rollback. The successful second
+reboot tested the saved state; physical selection through the updated UI still
+needs a dedicated persistence check.
 
 ## What the battery observation means
 
@@ -42,7 +50,7 @@ not a measured zero-drain claim or a battery-life benchmark.
 
 ## Next work
 
-1. Fix and retest unattended Wi-Fi startup / selected-network persistence.
+1. Physically exercise saved-network selection in the updated menu.
 2. Repeat sleep/wake, shutdown, Bluetooth/audio and recovery entry on the installed system.
 3. Publish the remaining implementation source with dependencies and licenses.
 4. Finish browser/downloads, playlists and recovery package Install/Update/Restore UI.
