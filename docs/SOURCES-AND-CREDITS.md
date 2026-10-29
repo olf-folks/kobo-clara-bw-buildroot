@@ -111,3 +111,16 @@ record. Raw owner/device captures are intentionally not published. Claims about
 our reader are our observations; upstream links support provenance, not a claim
 that upstream projects validated our firmware. Please report missing or
 incorrect credit so it can be corrected.
+
+## Additional testing references
+
+- The [Linux man-pages project](https://www.kernel.org/doc/man-pages/) and
+  [dup(2) reference](https://man7.org/linux/man-pages/man2/dup.2.html) document
+  shared open-file-description offsets, relevant to the File Manager Refresh
+  bug found in our own code. The regression and correction are our work.
+- [LAME contributors](https://lame.sourceforge.io/) and the
+  [LAME encoding API](https://github.com/lameproject/lame/blob/master/include/lame.h):
+  the installed encoder library generated original low/high sine-tone MP3
+  fixtures for ordered playlist testing. This is test tooling, not a new
+  runtime dependency of the Kobo player. No owner music is included in those
+  generated fixtures or this public repository.

@@ -21,7 +21,7 @@ kernel have been written to normal system/kernel partitions and booted.
 | Recovery | Re-entered after installed shutdown: authenticated USB SSH, RAM root, production storage unmounted and LK/U-Boot hashes preserved; return to Buildroot verified |
 | Installer | Local staged transaction; 16 fault cases plus full device readback passed; no on-screen package picker yet |
 | Browser/downloads | Standalone frontend/runtime not finished; menu entry alone does not establish a working browser |
-| Playlists | Folder queue works; actual playlist management remains unfinished |
+| Playlists | M3U/M3U8 import is installed in trial; trace confirms ordered/repeated low-high-low playback with automatic advance and final stop. Audible acceptance pending; creation/editing UI remains unfinished |
 
 ## Restart finding and fix
 

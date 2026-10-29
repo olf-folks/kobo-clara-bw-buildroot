@@ -54,3 +54,20 @@ The shell examples are [restore-light.sh](../cfw/board/restore-light.sh) and
 [kobo-home.sh](../cfw/board/kobo-home.sh). Their installed paths are
 `/usr/lib/kobo-lab/restore-light` and `/usr/bin/kobo-home`. They require the
 corresponding updated native menu to write the new settings fields.
+
+## File Manager Refresh incorrectly emptied the root listing
+
+The owner's files remained present and VFAT remained mounted. The browser's
+root-directory enumeration used `dup()` on its saved root descriptor. Both
+descriptors therefore shared one directory offset: after the first listing,
+Refresh read from the end of the directory. The fix opens a fresh directory
+description with `openat(root_fd, ".", ...)` for each traversal, retaining the
+existing descriptor-relative and no-follow rules. The shared-offset behavior
+is documented by the [Linux man-pages dup reference](https://man7.org/linux/man-pages/man2/dup.2.html).
+
+A new repeated-list regression fails before the fix. After the fix, 92 checks
+pass under host AddressSanitizer/UndefinedBehaviorSanitizer, 92 pass on the
+Kobo RAM filesystem and 81 pass in a new scratch directory on actual onboard
+VFAT (symlink cases are not applicable there). The fix-only menu is deployed
+with its predecessor retained. Owner confirms repeated Refresh/Home/navigation now works.
+The v12 whole-image candidate predates this fix and needs a refresh before use.

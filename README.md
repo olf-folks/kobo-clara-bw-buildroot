@@ -20,6 +20,7 @@ No device image, credentials, keys, owner notes/books or device calibration is i
 - [Boot chain, partition map and recovery](docs/BOOT-AND-RECOVERY.md)
 - [Build and installation workflow](docs/REPRODUCING.md)
 - [Problems and fixes](docs/FIXES.md)
+- [Local playlist trial](docs/PLAYLISTS.md)
 - [Sources and credits](docs/SOURCES-AND-CREDITS.md)
 - [What was omitted from this public snapshot](docs/PUBLICATION.md)
 
