@@ -1,0 +1,22 @@
+# This repository publishes reviewed docs and shell source, not device captures.
+build/
+.tools/
+private*/
+__pycache__/
+*.pyc
+*.img
+*.img.*
+*.bin
+*.itb
+*.ext4*
+*.tar*
+*.zip
+*.epub
+*.pdf
+*.mp3
+*.pem
+*.key
+id_*
+authorized_keys
+known_hosts*
+wpa_supplicant.conf
