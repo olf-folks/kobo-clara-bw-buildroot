@@ -46,7 +46,9 @@ session restores them on startup using a parser that accepts only bounded
 canonical decimal values; it never sources the settings file as shell code.
 The helper preserves explicitly saved off/zero and leaves legacy settings
 without light fields unchanged. Native save capture and parser tests pass;
-deployment is complete, with a physical setting/restart check pending.
+deployment is complete. After the owner selected brightness 10% and warmth
+40%, an actual normal restart restored both values, with automatic Wi-Fi and
+unchanged SSH identity. Visual confirmation remains pending.
 
 The shell examples are [restore-light.sh](../cfw/board/restore-light.sh) and
 [kobo-home.sh](../cfw/board/kobo-home.sh). Their installed paths are

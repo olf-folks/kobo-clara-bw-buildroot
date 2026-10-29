@@ -52,7 +52,7 @@ not a measured zero-drain claim or a battery-life benchmark.
 ## Next work
 
 1. Physically exercise saved-network selection in the updated menu.
-2. Finish saved-light restart check and installed Bluetooth/audio regression.
+2. Complete installed Bluetooth/audio regression; saved-light restart now passes.
 3. Publish the remaining implementation source with dependencies and licenses.
 4. Finish browser/downloads, playlists and recovery package Install/Update/Restore UI.
 
@@ -65,6 +65,8 @@ failed menu/display. The menu now saves actual brightness and logical warmth
 with its existing UI settings, and the home startup restores those numeric
 values. An explicit saved zero stays off; legacy files without the fields are
 left unchanged. The new menu and helper are deployed with previous binaries
-retained. Native save capture and restore parser tests passed; physical setting
-and restart restoration check is pending. Recovery still defaults to light off;
+retained. Native save capture and restore parser tests passed. The owner then selected
+brightness 10% and warmth 40%; a new normal restart restored those exact hardware
+values automatically, with Wi-Fi and persistent SSH identity also passing.
+Visual confirmation remains pending. Recovery still defaults to light off;
 we enabled it at runtime for the re-entry check.
