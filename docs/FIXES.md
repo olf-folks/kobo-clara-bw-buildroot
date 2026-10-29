@@ -37,3 +37,18 @@ automatic WPA/DHCP and pinned SSH after another normal reboot, without a Wi-Fi
 service restart. The menu source now saves existing-network selection and
 reports persistence failure. The rebuilt menu is deployed; existing connectivity
 regression tests passed. Physical selection persistence testing remains.
+
+## Frontlight persistence
+
+A normal cold boot left the native menu running with brightness zero. We now
+save actual brightness and logical warmth alongside UI font settings. The home
+session restores them on startup using a parser that accepts only bounded
+canonical decimal values; it never sources the settings file as shell code.
+The helper preserves explicitly saved off/zero and leaves legacy settings
+without light fields unchanged. Native save capture and parser tests pass;
+deployment is complete, with a physical setting/restart check pending.
+
+The shell examples are [restore-light.sh](../cfw/board/restore-light.sh) and
+[kobo-home.sh](../cfw/board/kobo-home.sh). Their installed paths are
+`/usr/lib/kobo-lab/restore-light` and `/usr/bin/kobo-home`. They require the
+corresponding updated native menu to write the new settings fields.

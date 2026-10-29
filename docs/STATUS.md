@@ -16,8 +16,9 @@ kernel have been written to normal system/kernel partitions and booted.
 | Bluetooth | Pair, audible A2DP audio to laptop, playback controls, reconnect and Forget passed RAM trials; bridge/server start on installed boot |
 | Sleep | RAM trial: real suspend, Power wake, touch/radio/light restore; longest recorded suspend 5865.133 seconds |
 | Shutdown | Patched-kernel RAM trial: LED and light off, then independent recovery entry without force reset |
-| Installed sleep/shutdown | Still require dedicated installed-system regression cycles |
-| Recovery | Independent RAM root; USB SSH and power-button/e-ink menu physically tested before rootfs replacement |
+| Installed sleep | Kernel reports 6.053-second actual suspend; owner confirms Power wake/touch; Wi-Fi, menu and frontlight restored |
+| Installed shutdown | Owner confirms fully off/stays off; subsequent normal cold boot verified with automatic Wi-Fi and persistent SSH identity |
+| Recovery | Re-entered after installed shutdown: authenticated USB SSH, RAM root, production storage unmounted and LK/U-Boot hashes preserved; return to Buildroot verified |
 | Installer | Local staged transaction; 16 fault cases plus full device readback passed; no on-screen package picker yet |
 | Browser/downloads | Standalone frontend/runtime not finished; menu entry alone does not establish a working browser |
 | Playlists | Folder queue works; actual playlist management remains unfinished |
@@ -51,8 +52,19 @@ not a measured zero-drain claim or a battery-life benchmark.
 ## Next work
 
 1. Physically exercise saved-network selection in the updated menu.
-2. Repeat sleep/wake, shutdown, Bluetooth/audio and recovery entry on the installed system.
+2. Finish saved-light restart check and installed Bluetooth/audio regression.
 3. Publish the remaining implementation source with dependencies and licenses.
 4. Finish browser/downloads, playlists and recovery package Install/Update/Restore UI.
 
 The overall project goal remains active and incomplete.
+
+## Frontlight startup follow-up
+
+The apparent black screen after cold boot was a zero frontlight level, not a
+failed menu/display. The menu now saves actual brightness and logical warmth
+with its existing UI settings, and the home startup restores those numeric
+values. An explicit saved zero stays off; legacy files without the fields are
+left unchanged. The new menu and helper are deployed with previous binaries
+retained. Native save capture and restore parser tests passed; physical setting
+and restart restoration check is pending. Recovery still defaults to light off;
+we enabled it at runtime for the re-entry check.
